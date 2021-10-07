@@ -28,6 +28,14 @@ void Student::addClass(Class *c) {
     classes.push_back(c);
 }
 
+bool Student::memberOfClass(std::string name) {
+    for (Class *cl: classes) {
+        if (cl->name == name)
+            return true;
+    }
+    return false;
+}
+
 Graduate::Graduate(const std::string &id, const std::string &name, const std::string &year)
         : Student(id, name, year) {
     degree = graduate;

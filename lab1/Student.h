@@ -27,6 +27,8 @@ public:
 
     void addClass(Class *c);
 
+    bool memberOfClass(std::string name);
+
 protected:
     Degree degree;
     std::vector<Class *> classes;

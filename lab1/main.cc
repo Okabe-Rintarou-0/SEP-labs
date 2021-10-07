@@ -72,7 +72,6 @@ void AppX::loadFiles() {
     vector <string> bufv;
     Student *st = nullptr;
     string clsname;
-    int point;
     Class *cl = nullptr;
     // Open a file as a input stream.
     ifstream stfile("./Students.txt");
@@ -117,19 +116,16 @@ void AppX::loadFiles() {
 
     ifstream clfile("./Classes.txt");
     while (getline(clfile, line)) {
-        std::cout << "Read line: " << line << std::endl;
         std::string name, point;
         if (line.find_first_of("Class") == 0) {
             pos1 = line.find(":", 0);
             if (pos1 != std::string::npos) {
                 name = line.substr(pos1 + 1);
-//                std::cout << "Read class: " << name << std::endl;
                 getline(clfile, line);
                 if (line.find("Point") == 0) {
                     pos1 = line.find(":", 0);
                     if (pos1 != std::string::npos) {
                         point = line.substr(pos1 + 1);
-//                        std::cout << "Read point: " << point << std::endl;
                         cl = new Class(name, std::atoi(point.c_str()));
                         while (getline(clfile, line)) {
                             if (line.empty())
@@ -138,7 +134,6 @@ void AppX::loadFiles() {
                             if (st != nullptr) {
                                 cl->addStudent(*st);
                                 st->addClass(cl);
-//                                cout << "Read student id: " << line << endl;
                             }
                         }
                         classVec.push_back(cl);
@@ -173,35 +168,44 @@ void AppX::inputScore() {
             continue;
         }
 
+        inputClass:
         cout << "Please input the class name (or input q to quit): ";
         cin >> sbuf;
         if (sbuf == "q")
             break;
 
         cl = findClass(sbuf);
-        if (cl == nullptr) {
+        if (cl == nullptr || !st->memberOfClass(sbuf)) {
             cout << "No match class!" << endl;
-            continue;
+            goto inputClass;
         }
+
 
         cout << "Please input the scores (or input q to quit): ";
         cin >> sbuf;
         if (sbuf == "q")
             break;
 
-        stringstream ss;
-        ss << sbuf;
-        int scores;
-        ss >> scores;
+        int scores = 0;
+        for (char ch : sbuf) {
+            if (isdigit(ch))
+                scores = scores * 10 + ch - '0';
+            else {
+                // wrong!
+                scores = -1;
+                break;
+            }
+        }
+
         if (scores < 0 || scores > 100) {
-            cout << "Invalid scores!" << endl;
+            cout << "Wrong score!" << endl;
             continue;
         }
 
         try {
             cl->getStudentWrapper(st->id).setScore(scores);
-        } catch (exception e) {
-            cout << e.what() << endl;
+        } catch (std::string err_msg) {
+            cout << err_msg << endl;
         }
     }
 }
@@ -232,7 +236,7 @@ void AppX::printAvgScore() {
         }
 
         avg = cl->getAvgScore();
-        cout << "The average score is: " << avg << endl;
+        printf("The average score is: %.2f\n", avg);
     }
 }
 
@@ -255,7 +259,7 @@ void AppX::printGpa() {
             continue;
         }
         gpa = st->getGrade();
-        cout << "The student's gpa is: " << gpa << endl;
+        printf("GPA = %.2f\n", gpa);
     }
 
 }
