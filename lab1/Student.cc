@@ -47,6 +47,7 @@ double Graduate::getGrade() const {
     double grade;
     double scores;
     for (Class *cl: classes) {
+
         StudentWrapper sw = cl->getStudentWrapper(id);
         scores = sw.getScore();
         if (scores >= 90)

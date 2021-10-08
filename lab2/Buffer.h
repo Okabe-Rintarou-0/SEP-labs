@@ -11,12 +11,16 @@ private:
     int currentLineNum;
     // TODO: add a List here for storing the input lines
 
-    list<string> lines;
+    list <string> lines;
 
-    void locate(int from, int to, list<string>::const_iterator &iter) const;
+    void checkInterval(int from, int to) const;
+
 public:
     Buffer();
+
     ~Buffer();
+
+    int size() const;
 
     void writeToFile(const string &filename) const;
 
@@ -25,6 +29,8 @@ public:
     void showLines(int from, int to) const;
 
     void deleteLines(int from, int to);
+
     void insertLine(const string &text);
+
     void appendLine(const string &text);
 };

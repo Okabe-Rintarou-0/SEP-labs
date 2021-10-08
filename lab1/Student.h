@@ -65,7 +65,7 @@ public:
 
     void setScore(double score) {
         if (score < 0 || score > 100)
-            throw "Invalid Score!";
+            throw "Wrong score!";
         this->score = score;
     }
 

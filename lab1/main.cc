@@ -22,6 +22,8 @@ private:
 
     Student *findStudent(const std::string &id) const;
 
+    Class *findClass(const std::string &name, Student *st) const;
+
     Class *findClass(const std::string &name) const;
 
 public:
@@ -54,7 +56,16 @@ Student *AppX::findStudent(const std::string &id) const {
         if (student->id == id)
             return student;
     }
-    return nullptr;
+    throw "No match student!";
+}
+
+Class *AppX::findClass(const std::string &name, Student *st) const {
+    for (Class *cl: classVec) {
+        if (cl->name == name && st->memberOfClass(name)) {
+            return cl;
+        }
+    }
+    throw "No match class!";
 }
 
 Class *AppX::findClass(const std::string &name) const {
@@ -63,7 +74,7 @@ Class *AppX::findClass(const std::string &name) const {
             return cl;
         }
     }
-    return nullptr;
+    throw "No match class!";
 }
 
 void AppX::loadFiles() {
@@ -71,7 +82,6 @@ void AppX::loadFiles() {
     size_t pos1, pos2;
     vector <string> bufv;
     Student *st = nullptr;
-    string clsname;
     Class *cl = nullptr;
     // Open a file as a input stream.
     ifstream stfile("./Students.txt");
@@ -122,7 +132,7 @@ void AppX::loadFiles() {
             if (pos1 != std::string::npos) {
                 name = line.substr(pos1 + 1);
                 getline(clfile, line);
-                if (line.find("Point") == 0) {
+                if (line.find_first_of("Points") == 0) {
                     pos1 = line.find(":", 0);
                     if (pos1 != std::string::npos) {
                         point = line.substr(pos1 + 1);
@@ -130,10 +140,12 @@ void AppX::loadFiles() {
                         while (getline(clfile, line)) {
                             if (line.empty())
                                 break;
-                            Student *st = findStudent(line);
-                            if (st != nullptr) {
+                            try {
+                                Student *st = findStudent(line);
                                 cl->addStudent(*st);
                                 st->addClass(cl);
+                            } catch (const char *err_msg) {
+                                std::cout << err_msg << std::endl;
                             }
                         }
                         classVec.push_back(cl);
@@ -161,10 +173,10 @@ void AppX::inputScore() {
         cin >> sbuf;
         if (sbuf == "q")
             break;
-
-        st = findStudent(sbuf);
-        if (st == nullptr) {
-            cout << "No match student!" << endl;
+        try {
+            st = findStudent(sbuf);
+        } catch (const char *err_msg) {
+            std::cout << err_msg << std::endl;
             continue;
         }
 
@@ -174,38 +186,28 @@ void AppX::inputScore() {
         if (sbuf == "q")
             break;
 
-        cl = findClass(sbuf);
-        if (cl == nullptr || !st->memberOfClass(sbuf)) {
-            cout << "No match class!" << endl;
+        try {
+            cl = findClass(sbuf, st);
+        } catch (const char *err_msg) {
+            std::cout << err_msg << std::endl;
             goto inputClass;
         }
-
 
         cout << "Please input the scores (or input q to quit): ";
         cin >> sbuf;
         if (sbuf == "q")
             break;
 
-        int scores = 0;
-        for (char ch : sbuf) {
-            if (isdigit(ch))
-                scores = scores * 10 + ch - '0';
-            else {
-                // wrong!
-                scores = -1;
-                break;
-            }
-        }
-
-        if (scores < 0 || scores > 100) {
-            cout << "Wrong score!" << endl;
-            continue;
-        }
+        double scores = -1;
+        stringstream ss;
+        ss << sbuf;
+        ss >> scores;
 
         try {
             cl->getStudentWrapper(st->id).setScore(scores);
-        } catch (std::string err_msg) {
-            cout << err_msg << endl;
+        } catch (const char *err_msg) {
+            std::cout << err_msg << std::endl;
+            continue;
         }
     }
 }
@@ -221,17 +223,10 @@ void AppX::printAvgScore() {
         if (sbuf == "q")
             break;
 
-        cl = nullptr;
-        for (vector<Class *>::iterator it = classVec.begin();
-             it != classVec.end();
-             ++it) {
-            if ((*it)->name == sbuf) {
-                cl = *it;
-                break;
-            }
-        }
-        if (cl == nullptr) {
-            cout << "No match class!" << endl;
+        try {
+            cl = findClass(sbuf);
+        } catch (const char *err_msg) {
+            std::cout << err_msg << std::endl;
             continue;
         }
 
@@ -253,13 +248,14 @@ void AppX::printGpa() {
         if (sbuf == "q")
             break;
 
-        st = findStudent(sbuf);
-        if (st == nullptr) {
-            cout << "No match student!" << endl;
+        try {
+            st = findStudent(sbuf);
+            gpa = st->getGrade();
+            printf("GPA = %.2f\n", gpa);
+        } catch (const char *err_msg) {
+            std::cout << err_msg << std::endl;
             continue;
         }
-        gpa = st->getGrade();
-        printf("GPA = %.2f\n", gpa);
     }
 
 }

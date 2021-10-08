@@ -4,20 +4,18 @@
 
 using namespace std;
 
-Editor::Editor()
-{
+Editor::Editor() {
     buffer = new Buffer();
 }
-Editor::~Editor()
-{
+
+Editor::~Editor() {
     // TODO: Implement destructor
+    delete buffer;
 }
 
-void Editor::run()
-{
+void Editor::run() {
     string cmd;
-    while (true)
-    {
+    while (true) {
         cout << "cmd> ";
         cout.flush();
         getline(cin, cmd);
@@ -34,18 +32,23 @@ void Editor::run()
         }
     }
 }
-void Editor::cmdAppend()
-{
+
+void Editor::cmdAppend() {
     cout << "It's input mode now. Quit with a line with a single dot(.)" << endl;
     // TODO: finish cmdAppend.
+    while (true) {
+        string text;
+        getline(cin, text);
+        if (text == ".")
+            break;
+        buffer->appendLine(text);
+    }
 }
 
-void Editor::cmdInsert()
-{
+void Editor::cmdInsert() {
     cout << "It's input mode now. Quit with a line with a single dot(.)" << endl;
     bool firstLine = true;
-    while (true)
-    {
+    while (true) {
         string text;
         getline(cin, text);
         if (text == ".")
@@ -53,34 +56,29 @@ void Editor::cmdInsert()
         if (firstLine) {
             buffer->insertLine(text);
             firstLine = false;
-        }  else {
+        } else {
             buffer->appendLine(text);
         }
     }
 }
 
-void Editor::cmdDelete(int start, int end)
-{
+void Editor::cmdDelete(int start, int end) {
     buffer->deleteLines(start, end);
 }
 
-void Editor::cmdNull(int line)
-{
+void Editor::cmdNull(int line) {
     cout << buffer->moveToLine(line) << endl;
 }
 
-void Editor::cmdNumber(int start, int end)
-{
+void Editor::cmdNumber(int start, int end) {
     buffer->showLines(start, end);
 }
 
-void Editor::cmdWrite(const string &filename)
-{
+void Editor::cmdWrite(const string &filename) {
     buffer->writeToFile(filename);
 }
 
-void Editor::dispatchCmd(const string &cmd)
-{
+void Editor::dispatchCmd(const string &cmd) {
     if (cmd == "a") {
         cmdAppend();
         return;
@@ -94,6 +92,10 @@ void Editor::dispatchCmd(const string &cmd)
         return;
     }
     // TODO: handle special case "1,$n".
+    if (cmd == "1,$n") {
+        cmdNumber(1, buffer->size());
+        return;
+    }
     int start, end;
     char comma, type = ' ';
     stringstream ss(cmd);
@@ -114,3 +116,4 @@ void Editor::dispatchCmd(const string &cmd)
     }
     throw "Bad/Unknown command";
 }
+

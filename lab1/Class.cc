@@ -14,7 +14,7 @@ StudentWrapper &Class::getStudentWrapper(const std::string &studentId) {
         if (it->id == studentId)
             return *it;
     }
-    throw "No matching student!";
+    throw "No match student!";
 }
 
 double Class::getAvgScore() {
