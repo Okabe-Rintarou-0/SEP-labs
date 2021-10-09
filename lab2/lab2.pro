@@ -9,12 +9,12 @@ CONFIG -= app_bundle
 
 HEADERS = \
    $$PWD/Buffer.h \
-   $$PWD/Editor.h
+   $$PWD/Editor.h \
 
 SOURCES = \
    $$PWD/Buffer.cc \
    $$PWD/ed.cc \
-   $$PWD/Editor.cc
+   $$PWD/Editor.cc \
 
 INCLUDEPATH = \
     $$PWD/.

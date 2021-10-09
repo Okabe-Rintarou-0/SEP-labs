@@ -89,6 +89,7 @@ void Editor::dispatchCmd(const string &cmd) {
     }
     if (cmd[0] == 'w' && cmd[1] == ' ') {
         // TODO: call cmdWrite with proper arguments
+        cmdWrite(cmd.substr(2, cmd.size() - 2));
         return;
     }
     // TODO: handle special case "1,$n".
