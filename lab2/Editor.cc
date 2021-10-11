@@ -87,14 +87,21 @@ void Editor::dispatchCmd(const string &cmd) {
         cmdInsert();
         return;
     }
-    if (cmd[0] == 'w' && cmd[1] == ' ') {
-        // TODO: call cmdWrite with proper arguments
-        cmdWrite(cmd.substr(2, cmd.size() - 2));
+    if (cmd[0] == 'w') {
+        if (cmd.size() >= 2) {
+            if (cmd[1] == ' ')
+                cmdWrite(cmd.substr(2, cmd.size() - 2));
+            else
+                throw "Bad/Unknown command";
+        }
+        else throw "Filename not specified";
         return;
     }
     // TODO: handle special case "1,$n".
     if (cmd == "1,$n") {
-        cmdNumber(1, buffer->size());
+        if (buffer->size() > 0)
+            cmdNumber(1, buffer->size());
+        else throw "Number range error";
         return;
     }
     int start, end;

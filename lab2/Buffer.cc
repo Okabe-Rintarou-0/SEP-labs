@@ -10,27 +10,34 @@ Buffer::Buffer() {}
 Buffer::~Buffer() {}
 
 void Buffer::writeToFile(const string &filename) const {
-    if (filename.empty()) throw "Filename not specified";
-    std::ofstream file(filename);
+    std::string trimmed;
+    int from = filename.find_first_not_of(' ');
+    int to = filename.find_last_not_of(' ');
+
+    if (from >= 0)
+        trimmed = filename.substr(from, from - to + 1);
+    else
+        throw "Filename not specified";
+
+    std::ofstream file(trimmed);
     std::vector <std::string> array = lines.toArray();
     std::string writtenStr;
-    for (int i = 0; i < (int) array.size() - 1; ++i) {
+    for (int i = 0; i < (int) array.size(); ++i) {
         writtenStr += array[i] + '\n';
-    }
-    if (array.size())
-        writtenStr += *(array.rbegin());
+    };
     file << writtenStr;
     std::cout << writtenStr.size() << " byte(s) written" << std::endl;
     file.close();
 }
 
 void Buffer::showLines(int from, int to) {
+    if (from > to) {
+        throw "Number range error";
+    }
+
     int size = lines.size();
     if (from > size || to > size || from < 1) {
         throw "Line number out of range";
-    }
-    if (from > to) {
-        throw "Number range error";
     }
 
     std::vector <string> array = lines.toArray(from, to);
@@ -42,13 +49,15 @@ void Buffer::showLines(int from, int to) {
 }
 
 void Buffer::deleteLines(int from, int to) {
+    if (from > to) {
+        throw "Delete range error";
+    }
+
     int size = lines.size();
     if (from > size || to > size || from < 1) {
         throw "Line number out of range";
     }
-    if (from > to) {
-        throw "Delete range error";
-    }
+
     lines.erase(from, to);
     if (to == size || lines.size() == 0) {
         currentLineNum = lines.size();
@@ -59,6 +68,7 @@ void Buffer::deleteLines(int from, int to) {
 
 void Buffer::insertLine(const string &text) {
     lines.insert(currentLineNum, text);
+    if (currentLineNum == 0) currentLineNum = 1;
 }
 
 void Buffer::appendLine(const string &text) {

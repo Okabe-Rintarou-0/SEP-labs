@@ -60,6 +60,11 @@ lab::List<T>::Node::Node(T value, Node *pre, Node *next) : value(value), pre(pre
 
 template<typename T>
 void lab::List<T>::insert(int pos, const T &data) {
+    ++curSize;
+    if (pos == 0) {
+        head = new Node(data);
+        return;
+    }
     Node *p = head;
     for (int i = 1; i < pos; ++i)
         p = p->next;
@@ -71,7 +76,6 @@ void lab::List<T>::insert(int pos, const T &data) {
         p->pre->next = node;
         p->pre = node;
     }
-    ++curSize;
 }
 
 template<typename T>
