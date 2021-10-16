@@ -26,10 +26,17 @@ private:
     /* data */
     int data[2];
 
+    TreeNode *leftChild;
+    TreeNode *rightChild;
+
 public:
     /* methods */
     int getX();  /* DO NOT CHANGE */
     int getY();  /* DO NOT CHANGE */
+    int getValue(int dim) const;
+
+    TreeNode(int x, int y, TreeNode *leftChild = nullptr, TreeNode *rightChild = nullptr);
+
     ~TreeNode(); /* DO NOT CHANGE */
 };
 
@@ -41,12 +48,18 @@ private:
     /* data */
     TreeNode *root;
 
+    void sortByDim(vector<TreeNode *> &nodes, int l, int r, int dim);
+
+    void create(vector<TreeNode *> &nodes, int l, int r, TreeNode **parent, int dim);
+
 public:
     /* methods */
     BinaryDimonTree();          /* DO NOT CHANGE */
     TreeNode *find_nearest_node(int x, int y);  /* DO NOT CHANGE */
 
-    void recur_search(TreeNode *cur, int x, int y, long long int &min_distance, TreeNode **guess);
+    void createTree(vector<TreeNode *> &nodes);
+
+    void recur_search(TreeNode *cur, int x, int y, double &min_distance, TreeNode **guess, int dim);
 
 };
 

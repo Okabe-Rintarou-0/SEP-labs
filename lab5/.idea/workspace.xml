@@ -9,10 +9,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e080661a-1e31-4547-a99d-cd279b3c5c96" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Tree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/Tree.h" afterDir="false" />
+    <list default="true" id="6d2db1a7-4159-4b3d-a2a0-80dd75320b0e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cuckoo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cuckoo.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/Tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/Tree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lab4/Tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/../lab4/Tree.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lab6/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab6/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +29,8 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="1zXwVpkXMx7PmfbOW5IJoWZIDjl" />
+  <component name="ProjectId" id="1zaW1Cs8naJSusE1EvBXFKVbSZ1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -36,7 +40,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lab6" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -46,18 +50,22 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.cidr.embedded.config" />
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e080661a-1e31-4547-a99d-cd279b3c5c96" name="Default Changelist" comment="" />
-      <created>1634307766473</created>
+      <changelist id="6d2db1a7-4159-4b3d-a2a0-80dd75320b0e" name="Default Changelist" comment="" />
+      <created>1634386461223</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1634307766473</updated>
-      <workItem from="1634307767607" duration="4265000" />
-      <workItem from="1634342735113" duration="3934000" />
-      <workItem from="1634380624199" duration="4137000" />
-      <workItem from="1634386480831" duration="97000" />
+      <updated>1634386461223</updated>
+      <workItem from="1634386462280" duration="9650000" />
     </task>
     <servers />
   </component>
@@ -65,17 +73,13 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1060" y="455" key="FileChooserDialogImpl" timestamp="1634386459301">
+    <state x="1011" y="500" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1634395103490">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1060" y="455" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1634386459301" />
-    <state x="982" y="432" width="596" height="536" key="find.popup" timestamp="1634383747665">
+    <state x="1011" y="500" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1634395103490" />
+    <state x="1060" y="455" key="FileChooserDialogImpl" timestamp="1634386468767">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="982" y="432" width="596" height="536" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1634383747665" />
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1634382916858">
-      <screen x="0" y="0" width="2560" height="1400" />
-    </state>
-    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1634382916858" />
+    <state x="1060" y="455" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1634386468767" />
   </component>
 </project>
