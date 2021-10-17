@@ -55,6 +55,7 @@ private:
 public:
     /* methods */
     BinaryDimonTree();          /* DO NOT CHANGE */
+    ~BinaryDimonTree();
     TreeNode *find_nearest_node(int x, int y);  /* DO NOT CHANGE */
 
     void createTree(vector<TreeNode *> &nodes);

@@ -129,3 +129,15 @@ TreeNode *BinaryDimonTree::find_nearest_node(int x, int y) {
 }
 
 BinaryDimonTree::BinaryDimonTree() : root(nullptr) {}
+
+BinaryDimonTree::~BinaryDimonTree() {
+    queue < TreeNode * > q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode *front = q.front();
+        if (front->leftChild) q.push(front->leftChild);
+        if (front->rightChild) q.push(front->rightChild);
+        q.pop();
+        delete front;
+    }
+}
