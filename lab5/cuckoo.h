@@ -6,15 +6,19 @@
 using namespace std;
 
 struct KeyVal {
-    KeyVal(int key, int val) : key(key), val(val) {}
+    KeyVal(int key, int val, bool valid) : key(key), val(val), valid(valid) {}
+
+    KeyVal() : valid(false) {}
 
     int key;
     int val;
+
+    bool valid;
 };
 
 class cuckoo {
 private:
-    vector<KeyVal *> tables[2];
+    vector <KeyVal> tables[2];
 
     int curTableSize = 8;
 
@@ -29,6 +33,8 @@ private:
     }
 
     void rehash();
+
+    void resize();
 
 public:
 

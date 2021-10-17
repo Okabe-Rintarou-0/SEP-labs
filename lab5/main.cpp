@@ -16,10 +16,10 @@ int main() {
     cin.ignore();
     for (int i = 0; i < M; ++i) {
         getline(cin, cmdline);
-        cout << "cmdline: " << cmdline << endl;
+//        cout << "cmdline: " << cmdline << endl;
         stringstream ss(cmdline);
         ss >> op;
-        cout << "op: " << op << endl;
+//        cout << "op: " << op << endl;
         if (op == "Insert") {
             ss >> para1 >> para2;
             if (ss.eof())
