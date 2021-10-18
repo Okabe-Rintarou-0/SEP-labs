@@ -22,8 +22,6 @@ private:
 
     int curTableSize = 8;
 
-    int (cuckoo::*hash[2])(int key);
-
     inline int hash1(int key) {
         return key % curTableSize;
     }

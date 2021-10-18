@@ -5,9 +5,6 @@
 cuckoo::cuckoo() {
     for (int i = 0; i < 2; ++i)
         tables[i].assign(curTableSize, KeyVal());
-
-    hash[0] = &hash1;
-    hash[1] = &hash2;
 }
 
 bool cuckoo::_lookup(int key, int &val) {
@@ -55,38 +52,40 @@ void cuckoo::_insert(int key, int value) {
         }
     }
 
-    int kickedSide = 0;
+    int kickSide = 0;
     int anotherSide;
-    int hashV;
-    KeyVal kicked = KeyVal(key, value, true);
+    int kickPos = hashVs[0];
+    int anotherPos;
+    KeyVal kicker = KeyVal(key, value, true);
     int kickedCnt = 0;
 
     do {
-        const KeyVal tmp = tables[kickedSide][hashVs[kickedSide]];
-        tables[kickedSide][hashVs[kickedSide]] = kicked;
-        printf("Kick %d with %d in table %d %d\n", tmp.key, kicked.key, kickedSide, hashVs[kickedSide]);
-        kicked = tmp;
+        const KeyVal kickee = tables[kickSide][kickPos];
+        tables[kickSide][kickPos] = kicker;
+        printf("Kick %d with %d in table %d %d\n", kickee.key, kicker.key, kickSide, kickPos);
+        kicker = kickee;
         if (++kickedCnt == 2 * curTableSize) {
             cout << "Loop Detect" << endl;
             break;
         }
 
-        anotherSide = (kickedSide + 1) % 2;
-        hashV = anotherSide ? hash2(kicked.key) : hash1(kicked.key);
+        anotherSide = (kickSide + 1) % 2;
+        anotherPos = anotherSide ? hash2(kicker.key) : hash1(kicker.key);
 
-        KeyVal &another = tables[anotherSide][hashV];
+        KeyVal &another = tables[anotherSide][anotherPos];
         if (!another.valid) {
-            another = kicked;
+            another = kicker;
             return;
         }
 
-        kickedSide = anotherSide;
+        kickSide = anotherSide;
+        kickPos = anotherPos;
     } while (true);
 
     // resize and rehash
     resize();
     rehash();
-    _insert(kicked.key, kicked.val);
+    _insert(kicker.key, kicker.val);
 }
 
 void cuckoo::resize() {
