@@ -99,6 +99,12 @@ void BinaryDimonTree::recur_search(TreeNode *cur, int x, int y, double &min_dist
         min_distance = curDis;
         *guess = cur;
 //        cout << "Update guess to " << *cur << endl;
+    } else if (curDis == min_distance) {
+        int curX = cur->getX(), curY = cur->getY();
+        int gx = (*guess)->getX(), gy = (*guess)->getY();
+        if (curX < gx || (curX == gx && curY < gy)) {
+            *guess = cur;
+        }
     }
 
     int curV = cur->getValue(dim);
@@ -113,7 +119,7 @@ void BinaryDimonTree::recur_search(TreeNode *cur, int x, int y, double &min_dist
     recur_search(next, x, y, min_distance, guess, nextDim);
 
     /*
-     * Image the circle. If the vertical or the horizontal distance
+     * Imagine the circle. If the vertical or the horizontal distance
      * is smaller than current minimum distance, that means it is possible
      * that there are some nearer points on the another side of the axis.
      */
